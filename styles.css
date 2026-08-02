@@ -703,26 +703,74 @@ button {
 }
 
 .contact__social-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.85rem 1.25rem;
+  gap: 0.9rem;
+  padding: 0.9rem 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   font-weight: 500;
   color: var(--text-secondary);
-  transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-base);
 }
 
-.contact__social-link i {
-  font-size: 1.25rem;
+.contact__social-link > i:first-child {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: var(--radius-sm);
 }
 
-.contact__social-link:hover {
+.contact__social-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.35;
+  min-width: 0;
+}
+
+.contact__social-text strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.contact__social-handle {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.contact__social-arrow {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  transition: transform var(--transition-fast), color var(--transition-fast);
+}
+
+.contact__social-link:hover,
+.contact__social-link:focus-visible {
   transform: translateX(4px);
   border-color: var(--border-accent);
   color: var(--text-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.contact__social-link:hover .contact__social-arrow,
+.contact__social-link:focus-visible .contact__social-arrow {
+  color: var(--accent-blue);
+  transform: translateX(3px);
+}
+
+.contact__social-link:hover .contact__social-handle {
+  color: var(--text-secondary);
 }
 
 /* Form styles */
@@ -810,16 +858,20 @@ button {
 
 .footer__inner {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
 }
 
 .footer p {
   font-size: 0.85rem;
   color: var(--text-muted);
+  text-align: center;
+  order: 2;
 }
 
 .footer__top {
+  order: 1;
   width: 40px;
   height: 40px;
   display: flex;

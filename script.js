@@ -181,7 +181,7 @@
     });
 
     messageInput.addEventListener('blur', function () {
-      validateField(messageInput, messageError, { required: true, minLength: 10 });
+      validateField(messageInput, messageError, { required: true, minLength: 1 });
     });
 
     /* Clear error styling on input */
@@ -202,7 +202,7 @@
         pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         patternMessage: 'Please enter a valid email address.',
       });
-      const isMessageValid = validateField(messageInput, messageError, { required: true, minLength: 10 });
+      const isMessageValid = validateField(messageInput, messageError, { required: true, minLength: 1 });
 
       if (isNameValid && isEmailValid && isMessageValid) {
         const submitBtn = contactForm.querySelector('button[type="submit"]');

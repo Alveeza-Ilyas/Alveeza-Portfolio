@@ -1061,6 +1061,26 @@ h3,
   color: var(--accent-purple);
 }
 
+.nav__logo-name {
+  color: var(--text-primary);
+}
+
+.nav__logo-accent {
+  color: var(--accent-blue);
+}
+
+/* Render the personal wordmark without depending on an image asset */
+.nav__logo {
+  font-size: 0;
+}
+
+.nav__logo::after {
+  content: 'Alveeza Ilyas';
+  color: var(--text-primary);
+  font: 600 1.35rem/1 var(--font-display);
+  letter-spacing: -0.055em;
+}
+
 .nav__menu {
   gap: 0.3rem;
   padding: 0.35rem;

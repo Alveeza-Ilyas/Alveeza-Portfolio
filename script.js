@@ -18,6 +18,48 @@
   const yearEl = document.getElementById('year');
 
   /* ==========================================================
+     Theme toggle — injected so the existing markup stays stable
+     ========================================================== */
+  const themeToggle = document.createElement('button');
+  const themeStorageKey = 'alveeza-theme';
+  themeToggle.type = 'button';
+  themeToggle.className = 'theme-toggle';
+  themeToggle.setAttribute('aria-pressed', 'false');
+
+  function setTheme(theme) {
+    const isLight = theme === 'light';
+    document.documentElement.dataset.theme = isLight ? 'light' : 'dark';
+    themeToggle.setAttribute('aria-pressed', String(isLight));
+    themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    themeToggle.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    themeToggle.innerHTML = isLight
+      ? '<i class="fa-solid fa-moon" aria-hidden="true"></i><span>Dark</span>'
+      : '<i class="fa-solid fa-sun" aria-hidden="true"></i><span>Light</span>';
+  }
+
+  let savedTheme = 'dark';
+  try {
+    savedTheme = localStorage.getItem(themeStorageKey) || 'dark';
+  } catch (err) {
+    /* Private browsing can block localStorage; dark mode remains the fallback. */
+  }
+
+  setTheme(savedTheme);
+  themeToggle.addEventListener('click', function () {
+    const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
+    try {
+      localStorage.setItem(themeStorageKey, nextTheme);
+    } catch (err) {
+      /* Theme still applies for the current page when storage is unavailable. */
+    }
+  });
+
+  if (header) {
+    header.querySelector('.nav').appendChild(themeToggle);
+  }
+
+  /* ==========================================================
      Footer — dynamic year
      ========================================================== */
   if (yearEl) {

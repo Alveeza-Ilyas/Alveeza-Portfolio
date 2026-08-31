@@ -1071,7 +1071,24 @@ h3,
 
 /* Render the personal wordmark without depending on an image asset */
 .nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 0;
+}
+
+.nav__logo::before {
+  content: 'A';
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: #0a171a;
+  background: var(--accent-gradient);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(114, 230, 255, 0.16);
+  font: 600 1.05rem/1 var(--font-display);
+  letter-spacing: -0.08em;
 }
 
 .nav__logo::after {
@@ -1079,6 +1096,36 @@ h3,
   color: var(--text-primary);
   font: 600 1.35rem/1 var(--font-display);
   letter-spacing: -0.055em;
+}
+
+.theme-toggle {
+  min-width: 84px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(20, 38, 54, 0.62);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  font: 600 0.72rem var(--font-mono);
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.theme-toggle:hover {
+  color: var(--bg-primary);
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+}
+
+.theme-toggle i {
+  color: var(--accent-blue);
+}
+
+.theme-toggle:hover i {
+  color: var(--bg-primary);
 }
 
 .nav__menu {
@@ -1431,16 +1478,15 @@ h3,
 }
 
 .section__header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 2rem;
+  display: block;
   margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
   text-align: left;
 }
 
 .section__label {
+  display: block;
   margin: 0;
+  margin-bottom: 0.75rem;
   color: var(--accent-purple);
   font-size: 0.72rem;
   font-weight: 600;
@@ -1761,6 +1807,22 @@ h3,
     color: var(--bg-primary);
   }
 
+  .theme-toggle {
+    min-width: 40px;
+    width: 40px;
+    padding: 0;
+    margin-left: auto;
+  }
+
+  .theme-toggle span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
   .hero {
     min-height: auto;
     padding-top: calc(var(--header-height) + 4rem);
@@ -1873,6 +1935,74 @@ h3,
   .hero__floating-card {
     transform: none;
   }
+}
+
+/* Light mode */
+[data-theme='light'] {
+  --bg-primary: #f5f9fb;
+  --bg-secondary: #eaf2f5;
+  --bg-card: rgba(255, 255, 255, 0.86);
+  --bg-card-hover: rgba(255, 255, 255, 0.98);
+  --accent-blue: #087d9e;
+  --accent-purple: #6b991e;
+  --accent-gradient: linear-gradient(120deg, #8fbf2d 0%, #42abc8 100%);
+  --text-primary: #0a1a28;
+  --text-secondary: #4f6676;
+  --text-muted: #718696;
+  --border-color: rgba(8, 28, 43, 0.12);
+  --border-accent: rgba(8, 125, 158, 0.4);
+  --shadow-sm: 0 12px 30px rgba(23, 62, 79, 0.1);
+  --shadow-md: 0 24px 70px rgba(23, 62, 79, 0.14);
+  --shadow-glow: 0 18px 60px rgba(8, 125, 158, 0.13);
+}
+
+[data-theme='light'] body {
+  background:
+    radial-gradient(circle at 8% 8%, rgba(66, 171, 200, 0.1), transparent 25rem),
+    radial-gradient(circle at 88% 35%, rgba(143, 191, 45, 0.08), transparent 28rem),
+    var(--bg-primary);
+}
+
+[data-theme='light'] .header {
+  background: rgba(245, 249, 251, 0.8);
+}
+
+[data-theme='light'] .nav__menu,
+[data-theme='light'] .theme-toggle {
+  background: rgba(255, 255, 255, 0.74);
+}
+
+[data-theme='light'] .nav__link:hover,
+[data-theme='light'] .nav__link.active,
+[data-theme='light'] .skill-card:hover {
+  color: #fff;
+}
+
+[data-theme='light'] .hero__bg::before {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(222, 239, 243, 0.75)),
+    linear-gradient(135deg, rgba(143, 191, 45, 0.12), transparent 40%);
+  border-color: rgba(8, 125, 158, 0.18);
+}
+
+[data-theme='light'] .hero__bg::after {
+  color: rgba(10, 26, 40, 0.65);
+  border-color: rgba(8, 125, 158, 0.18);
+}
+
+[data-theme='light'] .skill-card,
+[data-theme='light'] .form-group input,
+[data-theme='light'] .form-group textarea {
+  background: rgba(234, 242, 245, 0.74);
+}
+
+[data-theme='light'] .about,
+[data-theme='light'] .projects {
+  background: linear-gradient(180deg, rgba(234, 242, 245, 0.72), rgba(234, 242, 245, 0.32));
+}
+
+[data-theme='light'] .contact__social-link:hover {
+  background: #fff;
 }
 
 /* Fallback art direction for the current hero markup */

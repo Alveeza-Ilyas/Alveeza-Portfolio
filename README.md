@@ -30,6 +30,8 @@ A modern, responsive, and high-performance developer portfolio website designed 
   - [Inter](https://fonts.google.com/specimen/Inter) & [JetBrains Mono](https://fonts.google.com/specimen/JetBrains-Mono)
   - [Font Awesome v6.5.1](https://fontawesome.com/)
   - [Devicon v2](https://devicon.dev/)
+<img width="1886" height="792" alt="image" src="https://github.com/user-attachments/assets/21db661d-9c29-47bf-b1ca-4f015d34b282" />
+
 
 ### **Back-End & Deployment**
 - **Serverless API**: Node.js function on Vercel (`/api/contact`)

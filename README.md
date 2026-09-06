@@ -1,5 +1,5 @@
 
-# Alveeza Ilyas (Software Engineering Portfolio)
+# Alveeza Ilyas (Software Engineer)
 
 A modern, responsive, and high-performance developer portfolio website designed to showcase projects, skills, and experience across Web Development, Machine Learning, and UI/UX Design.
 

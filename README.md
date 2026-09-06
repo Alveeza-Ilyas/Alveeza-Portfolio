@@ -4,7 +4,7 @@
 A modern, responsive, and high-performance developer portfolio website designed to showcase projects, skills, and experience across Web Development, Machine Learning, and UI/UX Design.
 
 <img width="1886" height="792" alt="image" src="https://github.com/user-attachments/assets/21db661d-9c29-47bf-b1ca-4f015d34b282" />
----
+
 
 ## Features
 

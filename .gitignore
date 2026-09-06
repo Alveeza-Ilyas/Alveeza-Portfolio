@@ -1,0 +1,12 @@
+﻿# Environment & Secrets
+.env
+.env.*
+mcp_config.json
+*.local
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db

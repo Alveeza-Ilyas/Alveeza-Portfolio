@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio of Alveeza Ilyas — Software Engineering student specializing in Web Development, Machine Learning, AI, UI/UX Design, and Networking.">
+  <meta name="description" content="Portfolio of Alveeza Ilyas — Software Engineering student specializing in Web Development, Machine Learning, AI, and UI/UX Design.">
   <title>Alveeza Ilyas | Portfolio</title>
 
   <!-- Google Fonts -->
@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
 
   <!-- Skip link for keyboard users -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -61,16 +64,21 @@
     <!-- ========== Hero ========== -->
     <section id="home" class="hero section" aria-labelledby="hero-heading">
       <div class="hero__bg" aria-hidden="true"></div>
+      <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
       <div class="container hero__content">
         <p class="hero__greeting reveal">Hello, I'm</p>
         <h1 id="hero-heading" class="hero__name reveal">Alveeza Ilyas</h1>
+        <div class="hero__roles reveal" aria-label="Specializing in Web Development, Machine Learning, AI, and UI/UX Design">
+          <span class="hero__roles-prefix">Specializing in </span>
+          <span class="typewriter-text gradient-text" id="hero-typewriter">Web Development</span>
+          <span class="typewriter-cursor" aria-hidden="true">|</span>
+        </div>
         <p class="hero__tagline reveal">
           Software Engineering student passionate about
           <span class="gradient-text">Web Development</span>,
           <span class="gradient-text">Machine Learning</span>,
-          <span class="gradient-text">AI</span>,
-          <span class="gradient-text">UI/UX Design</span>, and
-          <span class="gradient-text">Networking</span>.
+          <span class="gradient-text">AI</span>, and
+          <span class="gradient-text">UI/UX Design</span>.
         </p>
         <div class="hero__actions reveal">
           <a href="#projects" class="btn btn--primary">
@@ -102,13 +110,13 @@
               code, design, and infrastructure.
             </p>
             <p>
-              My projects span disease prediction with ML, secure networking systems, full-stack
-              web applications, and low-level programming in Assembly and C++. I'm always
+              My projects span disease prediction with ML, full-stack web applications,
+              database management, and low-level programming in Assembly and C++. I'm always
               exploring new tools and pushing myself to write cleaner, more accessible code.
             </p>
             <p>
               When I'm not coding, you'll find me experimenting on Kaggle, refining UI mockups,
-              or simulating networks in Cisco Packet Tracer.
+              or building creative software solutions.
             </p>
           </div>
 
@@ -129,9 +137,9 @@
               <p>Crafting user-centered designs with Figma and Canva.</p>
             </div>
             <div class="about__card">
-              <i class="fa-solid fa-network-wired about__icon" aria-hidden="true"></i>
-              <h3>Networking</h3>
-              <p>Designing secure communication systems and network topologies.</p>
+              <i class="fa-solid fa-gears about__icon" aria-hidden="true"></i>
+              <h3>Software Engineering</h3>
+              <p>Developing clean, scalable architectures and algorithmic solutions.</p>
             </div>
           </div>
         </div>
@@ -279,7 +287,7 @@
                 <span>Supabase</span>
               </li>
               <li class="skill-card">
-                <i class="fa-solid fa-network-wired skill-card__icon" aria-hidden="true"></i>
+                <i class="fa-solid fa-diagram-project skill-card__icon" aria-hidden="true"></i>
                 <span>Cisco Packet Tracer</span>
               </li>
               <li class="skill-card">
@@ -341,9 +349,28 @@
           <h2 id="projects-heading" class="section__title">Featured Work</h2>
         </header>
 
+        <!-- Project Category Filters -->
+        <div class="projects__filter-container reveal" role="tablist" aria-label="Filter projects by category">
+          <button class="project-filter-btn active" data-filter="all" role="tab" aria-selected="true" type="button">
+            All <span class="filter-count">10</span>
+          </button>
+          <button class="project-filter-btn" data-filter="web" role="tab" aria-selected="false" type="button">
+            Web Dev <span class="filter-count">4</span>
+          </button>
+          <button class="project-filter-btn" data-filter="ml-ai" role="tab" aria-selected="false" type="button">
+            ML &amp; AI <span class="filter-count">1</span>
+          </button>
+          <button class="project-filter-btn" data-filter="systems" role="tab" aria-selected="false" type="button">
+            Systems &amp; Core <span class="filter-count">5</span>
+          </button>
+          <button class="project-filter-btn" data-filter="ui-ux" role="tab" aria-selected="false" type="button">
+            UI/UX Design <span class="filter-count">2</span>
+          </button>
+        </div>
+
         <div class="projects__grid">
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="ml-ai">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-stethoscope"></i>
             </div>
@@ -361,7 +388,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="web ui-ux">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-square-parking"></i>
             </div>
@@ -380,17 +407,17 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="systems">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-shield-halved"></i>
             </div>
             <h3 class="project-card__title">Secure Intra-Office File &amp; Communication Hub</h3>
             <p class="project-card__desc">
-              A networked hub for secure file sharing and internal messaging within an office
-              environment, designed with VLAN segmentation and access control policies.
+              A secure system for internal file sharing and messaging within an office
+              environment, designed with access control policies and segmented architecture.
             </p>
             <div class="project-card__tags">
-              <span class="tag">Networking</span>
+              <span class="tag">Systems</span>
               <span class="tag">Security</span>
             </div>
             <a href="https://github.com/Alveeza-Ilyas/The-Secure-Intra-Office-File-and-Communication-Hub-using-Networking" class="project-card__link" target="_blank" rel="noopener noreferrer" aria-label="View Secure Communication Hub on GitHub">
@@ -398,7 +425,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="web systems">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-book"></i>
             </div>
@@ -416,7 +443,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="web">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-user-gear"></i>
             </div>
@@ -434,7 +461,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="systems">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-ticket"></i>
             </div>
@@ -451,7 +478,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="web">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-clone"></i>
             </div>
@@ -469,7 +496,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="systems">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-car"></i>
             </div>
@@ -487,7 +514,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="systems">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-elevator"></i>
             </div>
@@ -504,7 +531,7 @@
             </a>
           </article>
 
-          <article class="project-card reveal">
+          <article class="project-card reveal" data-category="ui-ux">
             <div class="project-card__icon" aria-hidden="true">
               <i class="fa-solid fa-pen-ruler"></i>
             </div>
@@ -542,14 +569,19 @@
 
             <ul class="contact__socials" role="list">
               <li>
-                <a href="mailto:alveeza0109@gmail.com" class="contact__social-link contact__social-link--email" aria-label="Send Email to Alveeza Ilyas">
-                  <i class="fa-solid fa-envelope contact__icon" aria-hidden="true"></i>
-                  <div class="contact__social-text">
-                    <span class="contact__social-label">Email</span>
-                    <span class="contact__social-val">alveeza0109@gmail.com</span>
-                  </div>
-                  <i class="fa-solid fa-arrow-up-right-from-square contact__arrow" aria-hidden="true"></i>
-                </a>
+                <div class="contact__social-item">
+                  <a href="mailto:alveeza0109@gmail.com" class="contact__social-link contact__social-link--email" aria-label="Send Email to Alveeza Ilyas">
+                    <i class="fa-solid fa-envelope contact__icon" aria-hidden="true"></i>
+                    <div class="contact__social-text">
+                      <span class="contact__social-label">Email</span>
+                      <span class="contact__social-val" id="contact-email-val">alveeza0109@gmail.com</span>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square contact__arrow" aria-hidden="true"></i>
+                  </a>
+                  <button type="button" class="contact__copy-btn" id="copy-email-btn" aria-label="Copy email address to clipboard" title="Copy email address">
+                    <i class="fa-regular fa-copy" aria-hidden="true"></i>
+                  </button>
+                </div>
               </li>
               <li>
                 <a href="https://github.com/Alveeza-Ilyas" class="contact__social-link contact__social-link--github" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
@@ -641,6 +673,12 @@
       </a>
     </div>
   </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-hidden="true">
+    <i class="fa-solid fa-circle-check toast__icon" aria-hidden="true"></i>
+    <span class="toast__msg" id="toast-msg">Email copied to clipboard!</span>
+  </div>
 
   <script src="script.js"></script>
 </body>

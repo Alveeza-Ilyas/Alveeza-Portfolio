@@ -1,17 +1,22 @@
 
 # Alveeza Ilyas (Software Engineering Portfolio)
 
-A modern, responsive, and high-performance developer portfolio website designed to showcase projects, skills, and experience across Web Development, Machine Learning, UI/UX Design, and Networking.
+A modern, responsive, and high-performance developer portfolio website designed to showcase projects, skills, and experience across Web Development, Machine Learning, and UI/UX Design.
 
 ---
 
 ## Features
 
-- **Modern Dark Theme Aesthetic**: Built with deep obsidian/navy background colors, subtle glassmorphism card layouts, and vibrant accent gradients.
-- **Interactive & Responsive Navigation**: Mobile hamburger menu, smooth anchor scrolling, and scroll-activated sticky header.
+- **Modern Theme System**: Complete Dark & Light mode toggle with smooth CSS variable transitions and glassmorphism styling.
+- **Top Scroll Progress Indicator**: Sleek gradient progress bar tracking reading position.
+- **Interactive Hero Constellation**: HTML5 Canvas particle network reacting to cursor interactions.
+- **Dynamic Role Typewriter**: Smooth typewriter cycling through core engineering specializations.
+- **Interactive Project Category Filters**: Filter projects across Web Dev, ML & AI, Systems & Core, and UI/UX Design.
+- **3D Tilt & Spotlight Glow**: Interactive 3D perspective hover effect with dynamic radial cursor glow on project cards.
+- **One-Click Email Copy & Toast**: Convenient recruiter email copy action with animated feedback toast.
+- **Interactive & Responsive Navigation**: Mobile hamburger menu, smooth anchor scrolling, and sticky header.
 - **Dynamic Scroll Animations**: Smooth element reveal effects on scroll using standard `IntersectionObserver`.
 - **Interactive Skill Progress Bars**: Animated percentage visualizers for key programming languages.
-- **Featured Projects Showcase**: Grid layout displaying projects across ML, Web Dev, C++, Assembly, Logisim, and Figma UI/UX designs.
 - **Functional Contact Form**: Client-side validated form connected to a **Vercel Serverless Function** (`/api/contact`), storing messages in **Supabase** database and sending email notifications via **Resend**.
 
 ---

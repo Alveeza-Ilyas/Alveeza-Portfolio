@@ -314,5 +314,333 @@
     });
   });
 
+  /* ==========================================================
+     1. Scroll Progress Bar
+     ========================================================== */
+  const scrollProgressBar = document.getElementById('scroll-progress');
+  function handleScrollProgress() {
+    if (!scrollProgressBar) return;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    scrollProgressBar.style.width = Math.min(100, Math.max(0, progress)) + '%';
+  }
+  window.addEventListener('scroll', handleScrollProgress, { passive: true });
+  handleScrollProgress();
+
+  /* ==========================================================
+     2. Dynamic Role Typewriter in Hero
+     ========================================================== */
+  const typewriterEl = document.getElementById('hero-typewriter');
+  if (typewriterEl) {
+    const roles = [
+      'Web Development',
+      'Machine Learning & AI',
+      'UI/UX Design',
+      'Full-Stack Engineering',
+    ];
+    let roleIndex = 0;
+    let charIndex = roles[0].length;
+    let isDeleting = true;
+    let typeDelay = 2000;
+
+    function tickTypewriter() {
+      const currentRole = roles[roleIndex];
+
+      if (isDeleting) {
+        charIndex--;
+        typewriterEl.textContent = currentRole.substring(0, charIndex);
+        typeDelay = 45;
+      } else {
+        charIndex++;
+        typewriterEl.textContent = currentRole.substring(0, charIndex);
+        typeDelay = 90;
+      }
+
+      if (!isDeleting && charIndex === currentRole.length) {
+        isDeleting = true;
+        typeDelay = 1800;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        typeDelay = 400;
+      }
+
+      setTimeout(tickTypewriter, typeDelay);
+    }
+
+    setTimeout(tickTypewriter, 2000);
+  }
+
+  /* ==========================================================
+     3. Interactive Hero Canvas (Particle Constellation)
+     ========================================================== */
+  const heroCanvas = document.getElementById('hero-canvas');
+  if (heroCanvas && window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const ctx = heroCanvas.getContext('2d');
+    let width = (heroCanvas.width = heroCanvas.parentElement.offsetWidth);
+    let height = (heroCanvas.height = heroCanvas.parentElement.offsetHeight);
+
+    const particles = [];
+    const particleCount = Math.min(Math.floor(width / 24), 45);
+    const mouse = { x: null, y: null, maxDist: 110 };
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.radius = Math.random() * 1.8 + 1.2;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width) this.vx = -this.vx;
+        if (this.y < 0 || this.y > height) this.vy = -this.vy;
+
+        if (mouse.x !== null && mouse.y !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.maxDist) {
+            const force = (mouse.maxDist - dist) / mouse.maxDist;
+            this.x -= (dx / dist) * force * 1.5;
+            this.y -= (dy / dist) * force * 1.5;
+          }
+        }
+      }
+
+      draw() {
+        const isLight = document.documentElement.dataset.theme === 'light';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isLight ? 'rgba(37, 99, 235, 0.6)' : 'rgba(114, 230, 255, 0.65)';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    let isHeroVisible = true;
+    let animationFrameId = null;
+
+    function animateParticles() {
+      if (!isHeroVisible) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const isLight = document.documentElement.dataset.theme === 'light';
+      const maxConnectDist = 110;
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxConnectDist) {
+            const alpha = (1 - dist / maxConnectDist) * (isLight ? 0.12 : 0.2);
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = isLight
+              ? `rgba(37, 99, 235, ${alpha})`
+              : `rgba(139, 92, 246, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      animationFrameId = requestAnimationFrame(animateParticles);
+    }
+
+    if ('IntersectionObserver' in window) {
+      const heroSection = document.getElementById('home');
+      if (heroSection) {
+        const heroObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              isHeroVisible = entry.isIntersecting;
+              if (isHeroVisible && !animationFrameId) {
+                animateParticles();
+              } else if (!isHeroVisible && animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+              }
+            });
+          },
+          { threshold: 0.05 }
+        );
+        heroObserver.observe(heroSection);
+      }
+    } else {
+      animateParticles();
+    }
+
+    heroCanvas.addEventListener('mousemove', function (e) {
+      const rect = heroCanvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+
+    heroCanvas.addEventListener('mouseleave', function () {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (!heroCanvas.parentElement) return;
+        width = heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+        height = heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+      }, 150);
+    });
+  }
+
+  /* ==========================================================
+     4. Interactive Project Category Filter Tabs
+     ========================================================== */
+  const filterButtons = document.querySelectorAll('.project-filter-btn');
+  const projectCards = document.querySelectorAll('.projects__grid .project-card');
+
+  if (filterButtons.length && projectCards.length) {
+    filterButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        const filter = this.getAttribute('data-filter');
+
+        filterButtons.forEach(function (b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+
+        projectCards.forEach(function (card) {
+          const category = card.getAttribute('data-category') || '';
+          const matches = filter === 'all' || category.split(' ').includes(filter);
+
+          if (matches) {
+            card.classList.remove('filter-collapse');
+            requestAnimationFrame(function () {
+              card.classList.remove('filter-hide');
+            });
+          } else {
+            card.classList.add('filter-hide');
+            setTimeout(function () {
+              if (card.classList.contains('filter-hide')) {
+                card.classList.add('filter-collapse');
+              }
+            }, 300);
+          }
+        });
+      });
+    });
+  }
+
+  /* ==========================================================
+     5. 3D Tilt & Interactive Spotlight Glow on Project Cards
+     ========================================================== */
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (isFinePointer && projectCards.length) {
+    projectCards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* ==========================================================
+     6. Quick One-Click Email Copy & Toast Notification
+     ========================================================== */
+  const copyEmailBtn = document.getElementById('copy-email-btn');
+  const emailValEl = document.getElementById('contact-email-val');
+  const toastEl = document.getElementById('toast');
+  let toastTimer;
+
+  function showToast(msg) {
+    if (!toastEl) return;
+    const msgEl = document.getElementById('toast-msg');
+    if (msgEl && msg) msgEl.textContent = msg;
+
+    toastEl.classList.add('show');
+    toastEl.setAttribute('aria-hidden', 'false');
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove('show');
+      toastEl.setAttribute('aria-hidden', 'true');
+    }, 3500);
+  }
+
+  if (copyEmailBtn && emailValEl) {
+    copyEmailBtn.addEventListener('click', async function () {
+      const email = emailValEl.textContent.trim();
+      let copied = false;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(email);
+          copied = true;
+        } catch (err) {
+          copied = false;
+        }
+      }
+
+      if (!copied) {
+        const tempInput = document.createElement('input');
+        tempInput.value = email;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        try {
+          copied = document.execCommand('copy');
+        } catch (e) {
+          copied = false;
+        }
+        document.body.removeChild(tempInput);
+      }
+
+      if (copied) {
+        copyEmailBtn.classList.add('copied');
+        copyEmailBtn.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i>';
+        showToast('Email address copied to clipboard!');
+
+        setTimeout(function () {
+          copyEmailBtn.classList.remove('copied');
+          copyEmailBtn.innerHTML = '<i class="fa-regular fa-copy" aria-hidden="true"></i>';
+        }, 2500);
+      } else {
+        showToast('Could not copy email automatically.');
+      }
+    });
+  }
+
 })();
 
